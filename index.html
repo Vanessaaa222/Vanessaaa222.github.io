@@ -151,26 +151,50 @@
         <section id="comparison" class="py-16 md:py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">交互式性能对比</h2>
-                    <p class="max-w-3xl mx-auto text-slate-600 mb-12">我们的技术在各项关键性能指标上均实现了重大突破。点击下方按钮，直观感受活齿减速器与主流竞品的性能差异。</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">性能对比分析</h2>
+                    <p class="max-w-3xl mx-auto text-slate-600 mb-12">活齿减速器与主流减速器的全面性能对比，直观展示我们的技术优势。</p>
                 </div>
-
-                <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
-                    <button id="compare-rv" class="comparison-btn px-4 py-2 md:px-6 md:py-3 bg-white text-slate-700 rounded-lg shadow-md hover:bg-sky-100 transition duration-300">对比 RV 减速器</button>
-                    <button id="compare-harmonic" class="comparison-btn px-4 py-2 md:px-6 md:py-3 bg-white text-slate-700 rounded-lg shadow-md hover:bg-sky-100 transition duration-300">对比谐波减速器</button>
-                </div>
-
-                <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg grid md:grid-cols-2 gap-8 items-center">
-                    <div class="chart-container">
-                        <canvas id="performanceChart"></canvas>
+        
+                <!-- 第一个图表：谐波对比 -->
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold">对比 <span id="harmonic-current" class="text-yellow-600">谐波减速器</span></h3>
                     </div>
-                    <div>
-                        <h3 id="comparison-title" class="text-2xl font-bold mb-4 text-center md:text-left">性能对比分析</h3>
-                        <p id="comparison-text" class="text-slate-600 leading-relaxed">请选择一个对比目标，查看滚动活齿减速器的性能优势。我们的产品在传动效率、工作寿命、精度保持性和扭转刚度等核心维度上均表现出色，同时具备显著的成本效益。</p>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container h-80">
+                            <canvas id="harmonicChart"></canvas>
+                        </div>
+                        <div>
+                            <p class="text-slate-600 leading-relaxed">
+                                相较于谐波减速器，我们的产品在<strong>扭转刚度</strong>和<strong>工作寿命</strong>上实现了质的飞跃，并且<strong>传动效率</strong>更高。这使得我们的减速器在需要高刚性、长寿命的重载荷应用中成为更可靠的选择。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- 第二个图表：RV对比 -->
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold">对比 <span id="rv-current" style="color: #418953d0;">RV减速器</span></h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container h-80">
+                            <canvas id="rvChart"></canvas>
+                        </div>
+                        <div>
+                            <p class="text-slate-600 leading-relaxed">
+                                与主流RV减速器相比，我们的滚动活齿减速器在<strong>传动效率</strong>、<strong>工作寿命</strong>和<strong>精度保持性</strong>上优势明显，<strong>扭转刚度</strong>更是高出20%以上。同时，我们的制造成本也极具竞争力。
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
+
+
+
+
 
         <section id="application" class="bg-white py-16 md:py-24">
             <div class="container mx-auto px-6">
@@ -302,7 +326,7 @@
                     <p class="text-xl text-slate-700 mb-2">2025年融资计划</p>
                     <p class="text-5xl font-bold text-sky-600 mb-4">3000万</p>
                     <p class="text-slate-600">用于建设年产3万台的活齿减速器生产线</p>
-                    <button onclick="openModal()" class="mt-6 w-full bg-sky-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-sky-700 transition">联系我们洽谈</button>
+                    <img src="vx.jpeg" alt="滚动活齿减速器图片" class="mx-auto mt-6 max-w-xs rounded-lg">
                 </div>
                  <h2 class="mt-12 text-3xl md:text-4xl font-bold mb-4 text-sky-700">新原理 新结构 高精度 长寿命</h2>
                  <p class="mt-8 text-2xl font-bold text-slate-700">冷石传动竭力为工业母机，工业机器人，人形机器人和精密仪器提供最满意的精密传动解决方案</p>
@@ -318,131 +342,178 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // 数据定义
             const chartData = {
                 lengshi: [9.4, 8.0, 9.6, 9.2, 7.5],
                 rv: [8.2, 7.0, 8.0, 8, 5.0],
                 harmonic: [6.8, 8.7, 5.0, 7.0, 8.5]
             };
             const labels = ['传动效率', '工作寿命', '扭转刚度', '精度保持', '制造成本'];
-            const comparisonText = {
-                rv: {
-                    title: '对比 RV 减速器',
-                    text: '与主流RV减速器相比，我们的滚动活齿减速器在<strong>传动效率</strong>、<strong>工作寿命</strong>和<strong>精度保持性</strong>上优势明显，<strong>扭转刚度</strong>更是高出20%以上。同时，我们的制造成本也极具竞争力，为客户提供更高性价比的选择。'
+
+            // 通用图表配置
+            const chartOptions = {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: {
+                            font: { size: 14, family: "'Noto Sans SC', sans-serif" },
+                            color: '#2d3748'
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: '#718096',
+                            stepSize: 2,
+                            beginAtZero: true,
+                            max: 10
+                        }
+                    }
                 },
-                harmonic: {
-                    title: '对比谐波减速器',
-                    text: '相较于谐波减速器，我们的产品在<strong>扭转刚度</strong>和<strong>工作寿命</strong>上实现了质的飞跃，并且<strong>传动效率</strong>更高。这使得我们的减速器在需要高刚性、长寿命的重载荷应用中成为更可靠的选择。'
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 14, family: "'Noto Sans SC', sans-serif" }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `${context.dataset.label}: ${context.raw}`;
+                            }
+                        }
+                    }
                 }
             };
-            
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            const performanceChart = new Chart(ctx, {
+
+            // 创建第一个图表（谐波对比）
+            const ctx1 = document.getElementById('harmonicChart').getContext('2d');
+            const harmonicChart = new Chart(ctx1, {
                 type: 'radar',
                 data: {
                     labels: labels,
-                    datasets: []
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
-                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                            pointLabels: { 
-                                font: { size: 14, family: "'Noto Sans SC', sans-serif" },
-                                color: '#2d3748'
-                            },
-                            ticks: {
-                                backdropColor: 'transparent',
-                                color: '#718096',
-                                stepSize: 2,
-                                beginAtZero: true,
-                                max: 10
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: { size: 14, family: "'Noto Sans SC', sans-serif" }
-                            }
+                    datasets: [
+                        {
+                            label: '滚动活齿减速器',
+                            data: chartData.lengshi,
+                            backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                            borderColor: 'rgba(56, 189, 248, 1)',
+                            pointBackgroundColor: 'rgba(56, 189, 248, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(56, 189, 248, 1)',
+                            borderWidth: 2
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.dataset.label}: ${context.raw}`;
-                                }
-                            }
+                        {
+                            label: '主流谐波减速器',
+                            data: chartData.harmonic,
+                            backgroundColor: 'rgba(226, 180, 0, 0.2)',
+                            borderColor: '#E2B400',
+                            pointBackgroundColor: '#E2B400',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#E2B400',
+                            borderWidth: 2
                         }
-                    }
-                }
+                    ]
+                },
+                options: chartOptions
             });
 
-            const updateChart = (competitor) => {
-                performanceChart.data.datasets = [
-                    {
-                        label: '滚动活齿减速器',
-                        data: chartData.lengshi,
-                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
-                        borderColor: 'rgba(56, 189, 248, 1)',
-                        pointBackgroundColor: 'rgba(56, 189, 248, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(56, 189, 248, 1)',
-                        borderWidth: 2
+            // 创建第二个图表（RV对比）
+            const ctx2 = document.getElementById('rvChart').getContext('2d');
+            const rvChart = new Chart(ctx2, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '滚动活齿减速器',
+                            data: chartData.lengshi,
+                            backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                            borderColor: 'rgba(56, 189, 248, 1)',
+                            pointBackgroundColor: 'rgba(56, 189, 248, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(56, 189, 248, 1)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: '主流RV减速器',
+                            data: chartData.rv,
+                            backgroundColor: 'rgba(65, 137, 83, 0.2)',
+                            borderColor: '#418953d0',
+                            pointBackgroundColor: '#418953d0',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#418953d0',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: chartOptions
+            });
+
+            // 切换图表显示的函数
+            function updateChart(chart, competitor) {
+                const competitorData = {
+                    harmonic: {
+                        label: '主流谐波减速器',
+                        data: chartData.harmonic,
+                        color: '#E2B400',
+                        bgColor: 'rgba(226, 180, 0, 0.2)'
                     },
-                    {
-                        label: competitor === 'rv' ? '主流RV减速器' : '主流谐波减速器',
-                        data: chartData[competitor],
-                        backgroundColor: 'rgba(128, 128, 128, 0.2)',
-                        borderColor: 'rgba(128, 128, 128, 1)',
-                        pointBackgroundColor: 'rgba(128, 128, 128, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(128, 128, 128, 1)',
-                        borderWidth: 2
+                    rv: {
+                        label: '主流RV减速器',
+                        data: chartData.rv,
+                        color: '#418953d0',
+                        bgColor: 'rgba(65, 137, 83, 0.2)'
                     }
-                ];
-                performanceChart.update();
+                };
 
-                document.getElementById('comparison-title').innerHTML = comparisonText[competitor].title;
-                document.getElementById('comparison-text').innerHTML = comparisonText[competitor].text;
-                
-                document.querySelectorAll('.comparison-btn').forEach(btn => btn.classList.remove('btn-active', 'bg-sky-600', 'text-white'));
-                document.getElementById(`compare-${competitor}`).classList.add('btn-active', 'bg-sky-600', 'text-white');
-            };
+                chart.data.datasets[1] = {
+                    label: competitorData[competitor].label,
+                    data: competitorData[competitor].data,
+                    backgroundColor: competitorData[competitor].bgColor,
+                    borderColor: competitorData[competitor].color,
+                    pointBackgroundColor: competitorData[competitor].color,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: competitorData[competitor].color,
+                    borderWidth: 2
+                };
+                chart.update();
+            }
 
-            document.getElementById('compare-rv').addEventListener('click', () => updateChart('rv'));
-            document.getElementById('compare-harmonic').addEventListener('click', () => updateChart('harmonic'));
-            
-            updateChart('rv');
-            
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('section');
+            // 谐波图表的切换按钮
+            document.getElementById('harmonic-toggle-rv').addEventListener('click', function () {
+                updateChart(harmonicChart, 'rv');
+                document.getElementById('harmonic-current').textContent = 'RV减速器';
+                this.style.display = 'none';
+                document.getElementById('harmonic-toggle-harmonic').style.display = 'inline-block';
+            });
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            sections.forEach(section => observer.observe(section));
+            document.getElementById('harmonic-toggle-harmonic').addEventListener('click', function () {
+                updateChart(harmonicChart, 'harmonic');
+                document.getElementById('harmonic-current').textContent = '谐波减速器';
+                this.style.display = 'none';
+                document.getElementById('harmonic-toggle-rv').style.display = 'inline-block';
+            });
 
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
+            // RV图表的切换按钮
+            document.getElementById('rv-toggle-harmonic').addEventListener('click', function () {
+                updateChart(rvChart, 'harmonic');
+                document.getElementById('rv-current').textContent = '谐波减速器';
+                this.style.display = 'none';
+                document.getElementById('rv-toggle-rv').style.display = 'inline-block';
+            });
+
+            document.getElementById('rv-toggle-rv').addEventListener('click', function () {
+                updateChart(rvChart, 'rv');
+                document.getElementById('rv-current').textContent = 'RV减速器';
+                this.style.display = 'none';
+                document.getElementById('rv-toggle-harmonic').style.display = 'inline-block';
             });
         });
     </script>
