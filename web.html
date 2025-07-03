@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活齿减速器产业化项目 - 苏州冷石传动</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Slate & Sky Blue -->
+    <!-- Application Structure Plan: 本应用设计为一个单页滚动的叙事流程，旨在引导用户（如投资者、合作伙伴）逐步了解项目的核心价值。结构依次为：1. 英雄区域，提出核心价值主张；2. 市场痛点，阐明现有技术的局限性；3. 技术革新，介绍活齿减速器作为解决方案；4. 交互式性能对比，这是应用的核心，用户可以通过点击按钮动态比较产品性能，将静态数据转化为探索性体验；5. 核心优势总结，强化性能和成本亮点；6. 市场机遇，展示广阔的应用前景；7. 团队与蓝图，建立信任并展示未来规划。这个结构比单纯复述PPT更能引导用户发现项目的颠覆性潜力，特别是交互式图表的设计，极大地提升了数据可读性和用户参与感。 -->
+    <!-- Visualization & Content Choices: 1. 市场痛点 -> 告知 -> 关键指标卡片 -> HTML/Tailwind -> 快速展示行业核心问题。 2. 性能对比 -> 比较 -> 交互式雷达图 -> Chart.js -> 用户通过按钮选择对比对象（RV、谐波），图表动态更新，直观展示多维度性能差异，比静态表格更具说服力。随图表更新的还有旁边的解读文本，提供量化和质化的双重信息。 3. 发展蓝图 -> 展示变化 -> 水平时间轴 -> HTML/Tailwind -> 清晰呈现公司从过去到未来的发展阶段。所有元素均不使用SVG或Mermaid，符合要求。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #0284c7;
+        }
+        .nav-link.active {
+            color: #0284c7;
+            border-bottom: 2px solid #0284c7;
+        }
+        .btn-active {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            transform: scale(1.05);
+        }
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: auto;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat .value {
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+        .stat .label {
+            font-size: 16px;
+            margin-top: 8px;
+            color: #555;
+        }
+        .highlight {
+            color: #E2B400;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-slate-800">苏州冷石传动</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#problem" class="nav-link pb-1">市场痛点</a>
+                <a href="#solution" class="nav-link pb-1">技术革新</a>
+                <a href="#comparison" class="nav-link pb-1">性能对比</a>
+                <a href="#application" class="nav-link pb-1">应用领域</a>
+                <a href="#roadmap" class="nav-link pb-1">发展蓝图</a>
+                <a href="#contact" class="nav-link pb-1">融资计划</a>
+            </div>
+            <a href="#contact" class="hidden md:block bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition">联系我们</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white">
+            <div class="container mx-auto px-6 py-20 md:py-32 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">活齿减速器</h1>
+                <p class="text-lg md:text-2xl text-slate-600">以全新结构，定义下一代机器人与机床核心动力</p>
+                <img src="bkg.png" alt="活齿减速器图片" class="mx-auto mt-8 max-w-full">
+            </div>
+        </section>
+
+        <section id="problem" class="py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">行业痛点：被“卡脖子”的机器人心脏</h2>
+                <p class="max-w-3xl mx-auto text-slate-600 mb-12">减速器是工业机器人中成本占比最高的核心部件。全球高端市场长期被国外品牌垄断，国产方案在精度、寿命和效率上存在代差，利润空间狭窄。面对即将爆发的人形机器人时代，市场亟需一场动力革命。</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-2">技术垄断</h3>
+                        <p class="text-slate-600">高端RV与谐波减速器市场由日本两家企业主导，形成技术与价格壁垒。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-2">性能差距</h3>
+                        <p class="text-slate-600">国产减速器在精度保持性、工作寿命、传动效率等关键指标上全面落后。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-2">未来挑战</h3>
+                        <p class="text-slate-600">人形机器人对减速器提出了体积更小、效率更高、成本更低的苛刻要求。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="bg-white py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">我们的解决方案：活齿减速器</h2>
+                    <p class="max-w-3xl mx-auto text-slate-600 mb-12">苏州冷石传动科技，依托北京航空航天大学的深厚研究底蕴，推出革命性的“活齿减速器”，旨在全面替代现有技术，为中国乃至全球的机器人产业提供一颗强大的“中国心”。</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-stretch">
+                    <div class="bg-slate-50 p-8 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-3 text-sky-700">滚动活齿减速器</h3>
+                        <p class="mb-4 text-slate-600">用纯滚动摩擦替代滑动摩擦，从根本上解决磨损与效率问题。旨在全面替代RV减速器。</p>
+                        <ul class="space-y-2 text-slate-700">
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>超高效率:</strong> 传动效率高达<span class="font-bold text-sky-700">93-95.3%</span>，远超传统方案。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>超长寿命:</strong> 预期寿命超<span class="font-bold text-sky-700">10,000小时</span>，实测<span class="font-bold text-sky-700">6000小时</span>工作后精度仅下降<span class="font-bold text-sky-700">6角秒</span>。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>更高刚性:</strong> 刚度比RV减速器高出<span class="font-bold text-sky-700">20%</span>以上。</div></li>
+                        </ul>
+                        <img src="l.png" alt="滚动活齿减速器图片" class="mx-auto mt-6 max-w-xs rounded-lg">
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-3 text-sky-700">滑动活齿/谐波减速器</h3>
+                        <p class="mb-4 text-slate-600">针对谐波减速器的革新方案，性能全面提升，结构更加紧凑。</p>
+                         <ul class="space-y-2 text-slate-700">
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>结构紧凑:</strong> 体积减小<span class="font-bold text-sky-700">1/3</span>。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>刚度翻倍:</strong> 刚度提升<span class="font-bold text-sky-700">1倍</span>以上。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>效率提升:</strong> 传动效率提高<span class="font-bold text-sky-700">10-20%</span>。</div></li>
+                        </ul>
+                        <img src="r.png" alt="滑动活齿减速器图片" class="mx-auto mt-6 max-w-xs rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="comparison" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">交互式性能对比</h2>
+                    <p class="max-w-3xl mx-auto text-slate-600 mb-12">我们的技术在各项关键性能指标上均实现了重大突破。点击下方按钮，直观感受活齿减速器与主流竞品的性能差异。</p>
+                </div>
+
+                <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                    <button id="compare-rv" class="comparison-btn px-4 py-2 md:px-6 md:py-3 bg-white text-slate-700 rounded-lg shadow-md hover:bg-sky-100 transition duration-300">对比 RV 减速器</button>
+                    <button id="compare-harmonic" class="comparison-btn px-4 py-2 md:px-6 md:py-3 bg-white text-slate-700 rounded-lg shadow-md hover:bg-sky-100 transition duration-300">对比谐波减速器</button>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg grid md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                    <div>
+                        <h3 id="comparison-title" class="text-2xl font-bold mb-4 text-center md:text-left">性能对比分析</h3>
+                        <p id="comparison-text" class="text-slate-600 leading-relaxed">请选择一个对比目标，查看滚动活齿减速器的性能优势。我们的产品在传动效率、工作寿命、精度保持性和扭转刚度等核心维度上均表现出色，同时具备显著的成本效益。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="application" class="bg-white py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">应用领域</h2>
+                     <p class="max-w-3xl mx-auto text-slate-600 mb-12">活齿减速器在精密制造领域有着广泛的应用途径，为追求极致的客户提供高性能方案。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-stretch">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">现有产品</h3>
+                        <div class="space-y-6">
+                            <div class="bg-slate-50 p-6 rounded-lg h-80">
+                                <h4 class="font-bold text-lg mb-2">活齿机器人减速器</h4>
+                                <img src="h.jpg" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
+                            </div>
+                             <div class="bg-slate-50 p-6 rounded-lg h-80">
+                                <h4 class="font-bold text-lg mb-2">活齿减速器转台</h4>
+                                <img src="5.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
+                            </div>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-bold mb-6">应用场景</h3>
+                        <div class="space-y-6">
+                            <!-- 第一个卡片单独一行 -->
+                             <div class="bg-slate-50 p-6 rounded-lg h-80">
+                                <h4 class="font-bold text-lg mb-2">工业机器人/人形机器人/四足机械狗</h4>
+                                <img src="y1.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
+                            </div>
+                            <!-- 第二个和第三个卡片并排 -->
+                             <div class="flex gap-6 items-stretch">
+                                 <div class="bg-slate-50 p-6 rounded-lg flex-1">
+                                    <h4 class="font-bold text-lg mb-2">四轴/五轴机床</h4>
+                                    <img src="y2.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
+                                 </div>
+                                  <div class="bg-slate-50 p-6 rounded-lg flex-1">
+                                    <h4 class="font-bold text-lg mb-2">新能源汽车/航空航天制造……</h4>
+                                    <img src="y3.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="stats-container mt-16">
+                <div class="stat">
+                    <div class="value">1400m²</div>
+                    <div class="label">研发基地</div>
+                </div>
+                <div class="stat">
+                    <div class="value highlight">&gt; 93%</div>
+                    <div class="label">传动效率</div>
+                </div>
+                <div class="stat">
+                    <div class="value highlight">&lt; 37℃</div>
+                    <div class="label">表面温度</div>
+                </div>
+                <div class="stat">
+                    <div class="value">1000+</div>
+                    <div class="label">年产能1000+台</div>
+                </div>
+                <div class="stat">
+                    <div class="value highlight">17项</div>
+                    <div class="label">相关专利+产权</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">发展蓝图与团队实力</h2>
+                     <p class="max-w-3xl mx-auto text-slate-600 mb-12">我们拥有顶尖的专家团队和清晰的产业化路径，致力于成为全球机器人关节减速器领域的领导者。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">发展规划</h3>
+                        <div class="relative pl-8 border-l-2 border-sky-200">
+                            <div class="mb-8">
+                                <div class="absolute w-4 h-4 bg-sky-500 rounded-full -left-2 mt-1"></div>
+                                <p class="font-bold text-sky-700">2023-2024</p>
+                                <p class="text-slate-600">完成技术验证，实现转台销售，减速器进入外部测试。</p>
+                            </div>
+                            <div class="mb-8">
+                                <div class="absolute w-4 h-4 bg-sky-500 rounded-full -left-2 mt-1"></div>
+                                <p class="font-bold text-sky-700">2025</p>
+                                <p class="text-slate-600">高端关节减速器进入工程化应用，建设3万台年产能。</p>
+                            </div>
+                            <div class="mb-8">
+                                 <div class="absolute w-4 h-4 bg-sky-500 rounded-full -left-2 mt-1"></div>
+                                <p class="font-bold text-sky-700">2026</p>
+                                <p class="text-slate-600">建设10万台工业机器人大减速器制造基地。</p>
+                            </div>
+                            <div>
+                                 <div class="absolute w-4 h-4 bg-sky-500 rounded-full -left-2 mt-1"></div>
+                                <p class="font-bold text-sky-700">2027+</p>
+                                <p class="text-slate-600">建设50-100万台人形机器人减速器产能，成为行业首选。</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-bold mb-6">核心优势</h3>
+                        <div class="space-y-6">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2">创始人：陈志同教授</h4>
+                                <p class="text-slate-600">苏州冷石传动科技有限公司总经理，山东天舟精密机械有限公司董事长，北京航空航天大学机械工程及自动化学院教授，博士生导师。</p>
+                            </div>
+                             <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2">顶尖团队</h4>
+                                <p class="text-slate-600">核心团队汇聚北京航空航天大学，东京大学等顶尖学府硕士博士。核心研发团队硕博比例接近50%。</p>
+                            </div>
+                             <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h4 class="font-bold text-lg mb-2">显著成本优势</h4>
+                                <p class="text-slate-600">通过结构与工艺创新，预计制造成本降低<span class="font-bold text-sky-700">1/3</span>，自研核心制造设备，设备投入降低<span class="font-bold text-sky-700">2/3</span>。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="bg-white py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">市场机遇与融资计划</h2>
+                <p class="max-w-3xl mx-auto text-slate-600 mb-8">我们的目标市场覆盖百亿级的工业机器人、精密机床，以及潜力巨大的千亿级人形机器人市场。</p>
+                <div class="bg-slate-50 inline-block p-8 rounded-lg shadow-xl border border-sky-200">
+                    <p class="text-xl text-slate-700 mb-2">2025年融资计划</p>
+                    <p class="text-5xl font-bold text-sky-600 mb-4">3000万</p>
+                    <p class="text-slate-600">用于建设年产3万台的活齿减速器生产线</p>
+                    <button onclick="openModal()" class="mt-6 w-full bg-sky-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-sky-700 transition">联系我们洽谈</button>
+                </div>
+                 <h2 class="mt-12 text-3xl md:text-4xl font-bold mb-4 text-sky-700">新原理 新结构 高精度 长寿命</h2>
+                 <p class="mt-8 text-2xl font-bold text-slate-700">冷石传动竭力为工业母机，工业机器人，人形机器人和精密仪器提供最满意的精密传动解决方案</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 苏州冷石传动科技有限公司. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chartData = {
+                lengshi: [9.4, 8.0, 9.6, 9.2, 7.5],
+                rv: [8.2, 7.0, 8.0, 8, 5.0],
+                harmonic: [6.8, 8.7, 5.0, 7.0, 8.5]
+            };
+            const labels = ['传动效率', '工作寿命', '扭转刚度', '精度保持', '制造成本'];
+            const comparisonText = {
+                rv: {
+                    title: '对比 RV 减速器',
+                    text: '与主流RV减速器相比，我们的滚动活齿减速器在<strong>传动效率</strong>、<strong>工作寿命</strong>和<strong>精度保持性</strong>上优势明显，<strong>扭转刚度</strong>更是高出20%以上。同时，我们的制造成本也极具竞争力，为客户提供更高性价比的选择。'
+                },
+                harmonic: {
+                    title: '对比谐波减速器',
+                    text: '相较于谐波减速器，我们的产品在<strong>扭转刚度</strong>和<strong>工作寿命</strong>上实现了质的飞跃，并且<strong>传动效率</strong>更高。这使得我们的减速器在需要高刚性、长寿命的重载荷应用中成为更可靠的选择。'
+                }
+            };
+            
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const performanceChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: []
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: { 
+                                font: { size: 14, family: "'Noto Sans SC', sans-serif" },
+                                color: '#2d3748'
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                color: '#718096',
+                                stepSize: 2,
+                                beginAtZero: true,
+                                max: 10
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 14, family: "'Noto Sans SC', sans-serif" }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const updateChart = (competitor) => {
+                performanceChart.data.datasets = [
+                    {
+                        label: '滚动活齿减速器',
+                        data: chartData.lengshi,
+                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                        borderColor: 'rgba(56, 189, 248, 1)',
+                        pointBackgroundColor: 'rgba(56, 189, 248, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(56, 189, 248, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: competitor === 'rv' ? '主流RV减速器' : '主流谐波减速器',
+                        data: chartData[competitor],
+                        backgroundColor: 'rgba(128, 128, 128, 0.2)',
+                        borderColor: 'rgba(128, 128, 128, 1)',
+                        pointBackgroundColor: 'rgba(128, 128, 128, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(128, 128, 128, 1)',
+                        borderWidth: 2
+                    }
+                ];
+                performanceChart.update();
+
+                document.getElementById('comparison-title').innerHTML = comparisonText[competitor].title;
+                document.getElementById('comparison-text').innerHTML = comparisonText[competitor].text;
+                
+                document.querySelectorAll('.comparison-btn').forEach(btn => btn.classList.remove('btn-active', 'bg-sky-600', 'text-white'));
+                document.getElementById(`compare-${competitor}`).classList.add('btn-active', 'bg-sky-600', 'text-white');
+            };
+
+            document.getElementById('compare-rv').addEventListener('click', () => updateChart('rv'));
+            document.getElementById('compare-harmonic').addEventListener('click', () => updateChart('harmonic'));
+            
+            updateChart('rv');
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            sections.forEach(section => observer.observe(section));
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+
+<!-- 弹窗HTML -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white p-4 rounded-lg max-w-2xl max-h-screen">
+        <img src="vx.jpeg" alt="联系方式" class="w-full h-auto">
+        <button onclick="closeModal()" class="mt-4 w-full bg-gray-500 text-white py-2 rounded-lg">关闭</button>
+    </div>
+</div>
+
+<script>
+function openModal() {
+    document.getElementById('imageModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('imageModal').classList.add('hidden');
+}
+</script>
+
+</body>
+</html>
