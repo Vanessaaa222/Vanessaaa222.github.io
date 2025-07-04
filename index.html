@@ -48,24 +48,29 @@
         .stats-container {
             display: flex;
             justify-content: space-between;
-            max-width: 900px;
+            align-items: center;
+            /* 关键：让所有统计项目居中对齐 */
+            max-width: 90%;
             margin: auto;
         }
         .stat {
             text-align: center;
         }
         .stat .value {
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 32px);
             font-weight: bold;
-
+            line-height: 1.2;
+            /* 统一行高 */
         }
         .stat .label {
-            font-size: 16px;
+            font-size: clamp(14px, 2.5vw, 20px);
+            /* 最小14px，最大20px */
             margin-top: 8px;
             color: #555;
         }
+
         .highlight {
-            color: #E2B400;
+            color: #0284c7;
         }
     </style>
 </head>
@@ -128,9 +133,9 @@
                         <h3 class="text-2xl font-bold mb-3 text-sky-700">滚动活齿减速器</h3>
                         <p class="mb-4 text-slate-600">用纯滚动摩擦替代滑动摩擦，从根本上解决磨损与效率问题。旨在全面替代RV减速器。</p>
                         <ul class="space-y-2 text-slate-700">
-                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>超高效率:</strong> 传动效率高达<span class="font-bold text-sky-700">93-95.3%</span>，远超传统方案。</div></li>
-                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>超长寿命:</strong> 预期寿命超<span class="font-bold text-sky-700">10,000小时</span>，实测<span class="font-bold text-sky-700">6000小时</span>工作后精度仅下降<span class="font-bold text-sky-700">6角秒</span>。</div></li>
-                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>更高刚性:</strong> 刚度比RV减速器高出<span class="font-bold text-sky-700">20%</span>以上。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>超高效率:</strong> 传动效率高达<span class="font-bold text-sky-700 text-xl">93-95.3%</span>，远超传统方案。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>超长寿命:</strong> 预期寿命超<span class="font-bold text-sky-700 text-xl">10,000小时</span>，实测<span class="font-bold text-sky-700 text-xl">6000小时</span>工作后精度仅下降<span class="font-bold text-sky-700 text-xl">6角秒</span>。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>更高刚性:</strong> 刚度比RV减速器高出<span class="font-bold text-sky-700 text-xl">20%</span>以上。</div></li>
                         </ul>
                         <img src="l.png" alt="滚动活齿减速器图片" class="mx-auto mt-6 max-w-xs rounded-lg">
                     </div>
@@ -138,9 +143,9 @@
                         <h3 class="text-2xl font-bold mb-3 text-sky-700">滑动活齿/谐波减速器</h3>
                         <p class="mb-4 text-slate-600">针对谐波减速器的革新方案，性能全面提升，结构更加紧凑。</p>
                          <ul class="space-y-2 text-slate-700">
-                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>结构紧凑:</strong> 体积减小<span class="font-bold text-sky-700">1/3</span>。</div></li>
-                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>刚度翻倍:</strong> 刚度提升<span class="font-bold text-sky-700">1倍</span>以上。</div></li>
-                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>效率提升:</strong> 传动效率提高<span class="font-bold text-sky-700">10-20%</span>。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>结构紧凑:</strong> 体积减小<span class="font-bold text-sky-700 text-xl">1/3</span>。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>刚度翻倍:</strong> 刚度提升<span class="font-bold text-sky-700 text-xl">1倍</span>以上。</div></li>
+                            <li class="flex items-start"><span class="text-sky-500 font-bold mr-2">✓</span><div><strong>效率提升:</strong> 传动效率提高<span class="font-bold text-sky-700 text-xl">10-20%</span>。</div></li>
                         </ul>
                         <img src="r.png" alt="滑动活齿减速器图片" class="mx-auto mt-6 max-w-xs rounded-lg">
                     </div>
@@ -188,60 +193,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-
-
-
-
-
-        <section id="application" class="bg-white py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">应用领域</h2>
-                     <p class="max-w-3xl mx-auto text-slate-600 mb-12">活齿减速器在精密制造领域有着广泛的应用途径，为追求极致的客户提供高性能方案。</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-12 items-stretch">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-6">现有产品</h3>
-                        <div class="space-y-6">
-                            <div class="bg-slate-50 p-6 rounded-lg h-80">
-                                <h4 class="font-bold text-lg mb-2">活齿机器人减速器</h4>
-                                <img src="h.jpg" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
-                            </div>
-                             <div class="bg-slate-50 p-6 rounded-lg h-80">
-                                <h4 class="font-bold text-lg mb-2">活齿减速器转台</h4>
-                                <img src="5.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
-                            </div>
-                        </div>
-                    </div>
-                     <div>
-                        <h3 class="text-2xl font-bold mb-6">应用场景</h3>
-                        <div class="space-y-6">
-                            <!-- 第一个卡片单独一行 -->
-                             <div class="bg-slate-50 p-6 rounded-lg h-80">
-                                <h4 class="font-bold text-lg mb-2">工业机器人/人形机器人/四足机械狗</h4>
-                                <img src="y1.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
-                            </div>
-                            <!-- 第二个和第三个卡片并排 -->
-                             <div class="flex gap-6 items-stretch">
-                                 <div class="bg-slate-50 p-6 rounded-lg flex-1">
-                                    <h4 class="font-bold text-lg mb-2">四轴/五轴机床</h4>
-                                    <img src="y2.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
-                                 </div>
-                                  <div class="bg-slate-50 p-6 rounded-lg flex-1">
-                                    <h4 class="font-bold text-lg mb-2">新能源汽车/航空航天制造……</h4>
-                                    <img src="y3.png" alt="活齿减速器" class="mx-auto mt-8 w-full max-w-md max-h-48 object-contain">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="stats-container mt-16">
+                            <div class="stats-container mt-16">
                 <div class="stat">
                     <div class="value">1400m²</div>
                     <div class="label">研发基地</div>
@@ -261,6 +213,84 @@
                 <div class="stat">
                     <div class="value highlight">17项</div>
                     <div class="label">相关专利+产权</div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <section id="application" class="bg-white py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">应用领域</h2>
+                    <p class="max-w-3xl mx-auto text-slate-600 mb-12">活齿减速器在精密制造领域有着广泛的应用途径，为追求极致的客户提供高性能方案。</p>
+                </div>
+        
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- 左侧：现有产品 -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">现有产品</h3>
+                        <div class="space-y-6">
+                            <div class="bg-slate-50 p-6 rounded-lg h-80 flex flex-col">
+                                <h4 class="font-bold text-lg mb-4">活齿机器人减速器</h4>
+                                <div class="flex-1 flex items-end justify-center">
+                                    <div class="w-full h-full max-h-48  flex items-center justify-center">
+                                        <img src="h.png" class="w-full h-full max-h-48 object-contain">
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="bg-slate-50 p-6 rounded-lg h-80 flex flex-col">
+                                <h4 class="font-bold text-lg mb-4">活齿减速器转台</h4>
+                                <div class="flex-1 flex items-end justify-center">
+                                    <div class="w-full h-full max-h-48  flex items-center justify-center">
+                                        <img src="5.png" class="w-full h-full max-h-48 object-contain">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- 右侧：应用场景 -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">应用场景</h3>
+                        <div class="space-y-6">
+                            <!-- 第一个卡片 -->
+                            <div class="bg-slate-50 p-6 rounded-lg h-80 flex flex-col">
+                                <h4 class="font-bold text-lg mb-4">工业机器人/人形机器人/四足机械狗</h4>
+                                <div class="flex-1 flex items-end justify-center">
+                                    <div class="w-full h-full max-h-48  flex items-center justify-center">
+                                        <img src="y1.png" class="w-full h-full max-h-48 object-contain">
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <!-- 第二、三个卡片并排 -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="bg-slate-50 p-4 rounded-lg h-80 flex flex-col">
+                                    <h4 class="font-bold text-base mb-3">四轴/五轴机床</h4>
+                                    <div class="flex-1 flex items-end justify-center">
+                                        <div class="w-full h-full max-h-56  flex items-center justify-center">
+                                            <img src="y2.png" class="w-full h-full max-h-48 object-contain">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="bg-slate-50 p-4 rounded-lg h-80 flex flex-col">
+                                    <h4 class="font-bold text-base mb-3">新能源汽车/航空航天制造……</h4>
+                                    <div class="flex-1 flex items-end justify-center">
+                                        <div class="w-full h-full max-h-56  flex items-center justify-center">
+                                            <img src="y3.png" class="w-full h-full max-h-48 object-contain">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -310,7 +340,7 @@
                             </div>
                              <div class="bg-white p-6 rounded-lg shadow-md">
                                 <h4 class="font-bold text-lg mb-2">显著成本优势</h4>
-                                <p class="text-slate-600">通过结构与工艺创新，预计制造成本降低<span class="font-bold text-sky-700">1/3</span>，自研核心制造设备，设备投入降低<span class="font-bold text-sky-700">2/3</span>。</p>
+                                <p class="text-slate-600">通过结构与工艺创新，预计制造成本降低<span class="font-bold text-sky-700 text-xl">1/3</span>，自研核心制造设备，设备投入降低<span class="font-bold text-sky-700 text-xl">2/3</span>。</p>
                             </div>
                         </div>
                     </div>
