@@ -153,35 +153,28 @@
             </div>
         </section>
         
-        <section id="comparison" class="py-16 md:py-24">
+<section id="comparison" class="py-16 md:py-24">
     <div class="container mx-auto px-6">
         <div class="text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">性能对比分析</h2>
             <p class="max-w-3xl mx-auto text-slate-600 mb-12">多维度减速器性能对比，全面展示各类型减速器的技术特性。</p>
         </div>
 
-        <!-- 第一个图表：滚动活齿 vs 行星 vs RV -->
-        <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg mb-8">
-            <h3 class="text-2xl font-bold mb-6 text-center">滚动活齿减速器与其他减速器对比图</h3>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
+        <!-- 两个图表横向排列 -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- 第一个图表：滚动活齿 vs 行星 vs RV -->
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-6 text-center">滚动活齿减速器与其他减速器对比图</h3>
                 <div class="chart-container h-96">
                     <canvas id="chart1"></canvas>
                 </div>
-                <div>
-                    <p class="text-slate-600 leading-relaxed mt-6">滚动活齿减速器在传动精度、效率和刚度等方面表现优异，相比行星减速器具有更好的传动性能，与RV减速器相比在多项指标上展现出明显优势。</p>
-                </div>
             </div>
-        </div>
 
-        <!-- 第二个图表：滑动 vs 行星 vs 谐波 -->
-        <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
-            <h3 class="text-2xl font-bold mb-6 text-center">滑动活齿减速器与其他减速器对比图</h3>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
+            <!-- 第二个图表：滑动 vs 行星 vs 谐波 -->
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-6 text-center">滑动活齿减速器与其他减速器对比图</h3>
                 <div class="chart-container h-96">
                     <canvas id="chart2"></canvas>
-                </div>
-                <div>
-                    <p class="text-slate-600 leading-relaxed mt-6">滑动活齿减速器在抗冲击性和速度系数方面表现突出，相比谐波减速器在多项性能指标上更具优势，而行星减速器则在效率方面展现出独特的性能特点。</p>
                 </div>
             </div>
         </div>
@@ -345,7 +338,7 @@
         document.addEventListener('DOMContentLoaded', function () {
     // 数据定义
     const chartData = {
-        sliding: [110, 130, 130, 180, 200, 200, 90],
+        sliding: [110, 130, 120, 150, 170, 170, 90],
         rolling: [150, 130, 150, 110, 90, 120, 110],
         harmonic: [100, 100, 100, 100, 100, 100, 100],
         RV: [100, 100, 100, 100, 100, 100, 100],
